@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBERFORGE — Registration (50 Seats) | ACM-W NMIMS Indore</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23c8181a%22/><text y=%22.88em%22 font-size=%2265%22 fill=%22white%22 font-family=%22Orbitron%22 x=%2250%%22 text-anchor=%22middle%22 font-weight=%22bold%22>CF</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Oswald:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        :root {
+            --red: #c8181a;
+            --red-dark: #7a0000;
+            --black: #0f0f0f;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #d4d4d8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .bg-layers {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1;
+            background:
+                radial-gradient(ellipse 55% 50% at 100% 0%, rgba(180,10,10,0.12) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 35% at 0% 100%, rgba(20,0,0,0.08) 0%, transparent 65%),
+                radial-gradient(ellipse 70% 60% at 50% 50%, #ffffff 35%, rgba(248,243,243,1) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 12s ease-in-out infinite alternate;
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+        .bg-grid {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 47px, rgba(0,0,0,0.02) 47px, rgba(0,0,0,0.02) 48px),
+                repeating-linear-gradient(90deg, transparent, transparent 47px, rgba(0,0,0,0.02) 47px, rgba(0,0,0,0.02) 48px);
+        }
+
+        .card-frame {
+            position: relative;
+            background: #ffffff;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+            border-top: 9px solid var(--red);
+            border-bottom: 9px solid var(--red-dark);
+            width: 100%;
+            max-width: 820px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .corner { position: absolute; width: 18px; height: 18px; border-color: var(--red); border-style: solid; opacity: 0.5; pointer-events: none; z-index: 5; }
+        .corner.tl { top: 15px; left: 15px; border-width: 2px 0 0 2px; }
+        .corner.tr { top: 15px; right: 15px; border-width: 2px 2px 0 0; }
+        .corner.bl { bottom: 15px; left: 15px; border-width: 0 0 2px 2px; }
+        .corner.br { bottom: 15px; right: 15px; border-width: 0 2px 2px 0; }
+
+        .title-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .tech-orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+
+        .form-input { 
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: white;
+            border: 2px solid #0f172a;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: black;
+            border-radius: 0.375rem;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+        }
+        .form-input::placeholder { color: #94a3b8; font-weight: 500; font-size: 0.95rem; }
+        .form-input:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(200, 24, 26, 0.12); }
+
+        .btn-action {
+            padding: 14px 32px;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(180,10,10,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+        }
+        .btn-action:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(180,10,10,0.45); }
+        .btn-action:active { transform: translateY(0); scale: 0.98; }
+        .btn-action:disabled { opacity: 0.65; cursor: not-allowed; }
+
+        .btn-selection {
+            padding: 0.75rem 1rem;
+            border: 2px solid;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            border-radius: 0.375rem;
+            font-family: 'Oswald', sans-serif;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-selection.active { background: black; color: white; border-color: black; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+        .btn-selection.inactive { background: white; color: #64748b; border-color: #cbd5e1; }
+        .btn-selection.inactive:hover { border-color: var(--red); color: var(--red); }
+
+        .custom-alert {
+            animation: alertFade 0.3s ease forwards;
+        }
+        @keyframes alertFade { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+        .card-animation { animation: certSlideUp 0.5s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
+        @keyframes certSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cyberforgeForm', () => ({
+                submitted: false,
+                loading: false,
+                showAlert: false,
+                isClosed: false,
+                errorText: '',
+                seatLimit: 50,
+                scriptUrl: 'https://script.google.com/macros/s/AKfycby1ZyeEWBFjDreKrpWM-AG5J2Vns3ydxsh_bOha-eZN4zYfpbc__1-ulQhKThJtqiKF/exec',
+                
+                formData: {
+                    name: '',
+                    email: '',
+                    year: '',
+                    course: '',
+                    customCourse: ''
+                },
+
+                async init() {
+                    this.$nextTick(() => lucide.createIcons());
+                    this.checkSeatStatus();
+                },
+
+                async checkSeatStatus() {
+                    try {
+                        const res = await fetch(this.scriptUrl, { method: 'GET' });
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data.isClosed || data.count >= this.seatLimit) {
+                                this.isClosed = true;
+                                this.$nextTick(() => lucide.createIcons());
+                            }
+                        }
+                    } catch (e) {
+                        // Silent failover if script doesn't expose CORS on GET
+                    }
+                },
+
+                triggerError(msg) {
+                    this.errorText = msg;
+                    this.showAlert = true;
+                    this.$nextTick(() => lucide.createIcons());
+                    setTimeout(() => { this.showAlert = false; }, 4000);
+                },
+
+                async submitForm() {
+                    const name = (this.formData.name || '').trim();
+                    const email = (this.formData.email || '').trim().toLowerCase();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    const year = this.formData.year;
+                    let course = (this.formData.course || '').trim();
+                    if (course === 'Other') {
+                        course = (this.formData.customCourse || '').trim();
+                    }
+
+                    if (!name || name.length < 2) {
+                        return this.triggerError("FULL NAME REQUIRED (MIN 2 CHARACTERS)");
+                    }
+                    if (!email || !emailRegex.test(email)) {
+                        return this.triggerError("VALID EMAIL ADDRESS REQUIRED");
+                    }
+                    if (!year) {
+                        return this.triggerError("PLEASE SELECT ACADEMIC YEAR");
+                    }
+                    if (!course || course.length < 2) {
+                        return this.triggerError("PLEASE SELECT YOUR COURSE / PROGRAM");
+                    }
+
+                    this.loading = true;
+                    try {
+                        const res = await fetch(this.scriptUrl, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            cache: 'no-cache',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: JSON.stringify({
+                                name: name,
+                                email: email,
+                                year: year,
+                                course: course
+                            })
+                        });
+
+                        this.submitted = true;
+                    } catch (error) {
+                        this.triggerError("SUBMISSION ERROR — PLEASE RETRY");
+                    } finally {
+                        this.loading = false;
+                        this.$nextTick(() => lucide.createIcons());
+                    }
+                },
+
+                resetForm() {
+                    this.submitted = false;
+                    this.formData = { name: '', email: '', year: '', course: '', customCourse: '' };
+                    this.$nextTick(() => lucide.createIcons());
+                }
+            }));
+        });
+    </script>
+</head>
+<body>
+
+    <div class="bg-layers"></div>
+    <div class="bg-grid"></div>
+
+    <div x-data="cyberforgeForm" class="w-full max-w-3xl relative">
+        
+        <!-- ALERT TOAST -->
+        <div x-show="showAlert" x-cloak class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] custom-alert w-[90%] max-w-md">
+            <div class="bg-red-600 text-white px-6 py-3.5 title-oswald font-bold shadow-2xl border-l-4 border-black flex items-center gap-3">
+                <i data-lucide="alert-triangle" class="w-5 h-5 shrink-0"></i>
+                <span class="text-sm tracking-wide" x-text="errorText"></span>
+            </div>
+        </div>
+
+        <!-- 50 SEATS LIMIT REACHED - CLOSING OVERLAY (THEME FROM JOIN) -->
+        <div x-show="isClosed" x-cloak class="fixed inset-0 z-[200] bg-white flex flex-col items-center justify-center overflow-y-auto p-6 md:p-12 card-animation">
+            <div class="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
+            <div class="bg-layers absolute inset-0 opacity-10 pointer-events-none"></div>
+            
+            <div class="relative z-10 w-full max-w-5xl flex flex-col items-center text-center">
+                
+                <!-- TOP ROW: NMIMS | CLOCK | ACMs (ENLARGED) -->
+                <div class="w-full flex items-center justify-between mb-12 md:mb-20 px-2 sm:px-6 md:px-10">
+                    <!-- Left: NMIMS Logo (Large) -->
+                    <div class="w-40 h-16 sm:w-56 sm:h-20 md:w-72 md:h-24 bg-white p-2.5 sm:p-3 shadow-md rounded-lg border border-slate-200 flex items-center justify-center shrink-0">
+                        <img src="nmims.png" alt="NMIMS" class="max-h-full max-w-full object-contain">
+                    </div>
+                    
+                    <!-- Center: Clock Icon -->
+                    <div class="w-18 h-18 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-red-600 text-white rounded-full flex items-center justify-center shadow-2xl shrink-0 ring-4 sm:ring-8 ring-red-100 mx-2 sm:mx-4">
+                        <i data-lucide="clock" class="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14"></i>
+                    </div>
+
+                    <!-- Right: ACM & ACM-W Logos (Large) -->
+                    <div class="flex items-center gap-3 sm:gap-4 md:gap-5 shrink-0">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white p-2 sm:p-3 shadow-md rounded-lg border border-slate-200 flex items-center justify-center">
+                            <img src="acmw.png" alt="ACM-W" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white p-2 sm:p-3 shadow-md rounded-lg border border-slate-200 flex items-center justify-center">
+                            <img src="acm.png" alt="ACM" class="max-h-full max-w-full object-contain">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Structured Message -->
+                <div class="space-y-4 px-4">
+                    <div class="tech-orbitron text-xs text-red-600 font-bold uppercase tracking-[4px]">
+                        CAPACITY EXCEEDED [50 / 50 ALLOTTED]
+                    </div>
+                    
+                    <h1 class="title-oswald text-5xl sm:text-7xl md:text-8xl font-black text-black italic leading-[0.85] uppercase tracking-tighter">
+                        Registrations Closed.
+                    </h1>
+                    
+                    <div class="h-1.5 w-36 bg-red-600 mx-auto my-6"></div>
+                    
+                    <p class="title-oswald text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 italic uppercase max-w-3xl mx-auto leading-tight">
+                        Registrations for CyberForge 2026 have reached the maximum participant limit of 50 seats.
+                    </p>
+                    
+                    <p class="text-slate-500 text-sm md:text-base font-semibold italic uppercase tracking-[0.15em] pt-4">
+                        Please reach out to the ACM-W NMIMS Indore organizing team for waitlist queries.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Background Icons -->
+            <div class="absolute -bottom-10 -left-10 opacity-[0.03] pointer-events-none hidden lg:block">
+                <i data-lucide="lock" class="w-96 h-96 text-black"></i>
+            </div>
+            <div class="absolute -top-10 -right-10 opacity-[0.03] pointer-events-none hidden lg:block">
+                <i data-lucide="shield" class="w-96 h-96 text-black"></i>
+            </div>
+        </div>
+
+        <!-- MAIN FORM CARD -->
+        <div class="card-frame p-6 sm:p-10 relative">
+            <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+
+            <!-- SUBMITTED SUCCESS CARD -->
+            <template x-if="submitted">
+                <div class="text-center py-8 relative z-10 card-animation">
+                    <div class="w-20 h-20 bg-red-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl ring-8 ring-red-50">
+                        <i data-lucide="shield-check" class="w-10 h-10"></i>
+                    </div>
+
+                    <h1 class="title-oswald text-4xl sm:text-5xl font-black text-black italic uppercase">Transmission Successful</h1>
+                    <div class="h-1 w-20 bg-red-600 my-4 mx-auto"></div>
+                    <p class="text-slate-500 text-base font-medium max-w-md mx-auto mb-8 italic">
+                        Your seat for <strong class="text-black">CyberForge 2026</strong> has been reserved.
+                    </p>
+
+                    <!-- Summary Card -->
+                    <div class="mb-8 p-6 border-2 border-slate-900 bg-white text-left max-w-md mx-auto shadow-md">
+                        <div class="tech-orbitron text-[9px] tracking-[4px] mb-2 uppercase font-bold text-red-600">Participant Details</div>
+                        <div class="space-y-2 text-sm">
+                            <div><span class="text-slate-400 uppercase text-xs font-bold">Name:</span> <strong class="title-oswald text-base" x-text="formData.name"></strong></div>
+                            <div><span class="text-slate-400 uppercase text-xs font-bold">Email:</span> <span class="font-bold text-slate-800" x-text="formData.email"></span></div>
+                            <div><span class="text-slate-400 uppercase text-xs font-bold">Academic:</span> <span class="font-bold text-slate-800" x-text="`${formData.course === 'Other' ? formData.customCourse : formData.course} (${formData.year})`"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Link -->
+                    <div class="max-w-md mx-auto space-y-4">
+                        <a href="https://chat.whatsapp.com/Js1yZ7DRzUqCMCAes8KzLX" target="_blank" class="btn-action w-full">
+                            Join Official WhatsApp Group <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+
+                        <button @click="resetForm()" class="title-oswald text-slate-400 hover:text-black font-bold uppercase flex items-center justify-center gap-2 tracking-widest transition-colors py-2 text-xs mx-auto">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Register Another Participant
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- REGISTRATION FORM -->
+            <template x-if="!submitted">
+                <div class="relative z-10">
+                    
+                    <!-- Header with Logos & 50-Seat Badge -->
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-5 mb-8">
+                        <div class="w-36 sm:w-52 h-14 sm:h-16 flex items-center">
+                            <img src="nmims.png" alt="NMIMS" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <div class="flex items-center gap-2.5 sm:gap-3.5">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center p-1.5 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <img src="acmw.png" alt="ACM-W" class="max-h-full max-w-full object-contain">
+                            </div>
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center p-1.5 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <img src="acm.png" alt="ACM" class="max-h-full max-w-full object-contain">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Title & Seat Counter Indicator -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+                            <span class="tech-orbitron text-[10px] text-red-600 font-bold uppercase tracking-[4px]">
+                                ACM-W Student Chapter • SVKM's NMIMS Indore
+                            </span>
+                            <span class="tech-orbitron text-[10px] font-bold uppercase tracking-[2px] bg-red-50 text-red-600 border border-red-200 px-2.5 py-0.5 rounded">
+                                STRICT 50-SEAT LIMIT
+                            </span>
+                        </div>
+                        <h1 class="title-oswald text-4xl sm:text-6xl font-black text-black italic leading-[0.9] uppercase tracking-tight">
+                            CYBER<span class="text-red-600">FORGE</span>
+                        </h1>
+                        <p class="text-slate-500 font-semibold tracking-[3px] uppercase text-[11px] mt-2">
+                            Learn the Threat • Build the Defense | Participant Registration
+                        </p>
+                    </div>
+
+                    <!-- Form Inputs -->
+                    <form @submit.prevent="submitForm" class="space-y-6">
+                        
+                        <!-- 1. Full Name -->
+                        <div>
+                            <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[3px] uppercase block mb-2">
+                                Full Name <span class="text-black">*</span>
+                            </label>
+                            <input type="text" 
+                                   class="form-input" 
+                                   placeholder="ENTER FULL LEGAL NAME" 
+                                   x-model="formData.name">
+                        </div>
+
+                        <!-- 2. Email Address -->
+                        <div>
+                            <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[3px] uppercase block mb-2">
+                                Email Address <span class="text-black">*</span>
+                            </label>
+                            <input type="email" 
+                                   class="form-input" 
+                                   placeholder="E.G., NAME@NMIMS.EDU" 
+                                   x-model="formData.email">
+                        </div>
+
+                        <!-- 3. Academic Year -->
+                        <div>
+                            <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[3px] uppercase block mb-2">
+                                Academic Year <span class="text-black">*</span>
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <template x-for="yr in ['1st Year', '2nd Year', '3rd Year', '4th Year']" :key="yr">
+                                    <button type="button" 
+                                            @click="formData.year = yr" 
+                                            class="btn-selection" 
+                                            :class="formData.year === yr ? 'active' : 'inactive'" 
+                                            x-text="yr">
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- 4. Course / Program (Clickable Options) -->
+                        <div>
+                            <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[3px] uppercase block mb-2">
+                                Course / Program <span class="text-black">*</span>
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <template x-for="c in ['B.Tech CE', 'AI & DS', 'MBA Tech', 'Other']" :key="c">
+                                    <button type="button" 
+                                            @click="formData.course = c" 
+                                            class="btn-selection" 
+                                            :class="formData.course === c ? 'active' : 'inactive'" 
+                                            x-text="c">
+                                    </button>
+                                </template>
+                            </div>
+                            
+                            <!-- Custom course entry if Other is selected -->
+                            <div x-show="formData.course === 'Other'" x-cloak class="mt-3 card-animation">
+                                <input type="text" 
+                                       class="form-input text-base" 
+                                       placeholder="ENTER YOUR SPECIFIC PROGRAM / BRANCH..." 
+                                       x-model="formData.customCourse">
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <button type="submit" :disabled="loading" class="btn-action w-full py-4">
+                                <span x-text="loading ? 'TRANSMITTING...' : 'REGISTER NOW (50 SEATS ONLY)'"></span>
+                                <i x-show="!loading" data-lucide="arrow-right" class="w-5 h-5"></i>
+                                <svg x-show="loading" class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </template>
+        </div>
+
+    </div>
+
+</body>
+</html>
