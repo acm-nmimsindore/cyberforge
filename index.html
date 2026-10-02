@@ -185,6 +185,7 @@
                     const name = (this.formData.name || '').trim();
                     const email = (this.formData.email || '').trim().toLowerCase();
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    const nmimsEmailRegex = /^[^\s@]+@([a-zA-Z0-9-]+\.)*nmims\.in$/i;
                     const year = this.formData.year;
                     let course = (this.formData.course || '').trim();
                     if (course === 'Other') {
@@ -197,8 +198,11 @@
                     if (!email || !emailRegex.test(email)) {
                         return this.triggerError("VALID EMAIL ADDRESS REQUIRED");
                     }
-                    if (!year) {
-                        return this.triggerError("PLEASE SELECT ACADEMIC YEAR");
+                    if (!nmimsEmailRegex.test(email)) {
+                        return this.triggerError("ONLY OFFICIAL NMIMS EMAIL IDS ACCEPTED (@NMIMS.IN)");
+                    }
+                    if (!year || !['2nd Year', '3rd Year'].includes(year)) {
+                        return this.triggerError("PLEASE SELECT ACADEMIC YEAR (2ND OR 3RD YEAR)");
                     }
                     if (!course || course.length < 2) {
                         return this.triggerError("PLEASE SELECT YOUR COURSE / PROGRAM");
@@ -407,12 +411,15 @@
                         <!-- 2. Email Address -->
                         <div>
                             <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[3px] uppercase block mb-2">
-                                Email Address <span class="text-black">*</span>
+                                NMIMS Email Address <span class="text-black">*</span>
                             </label>
                             <input type="email" 
                                    class="form-input" 
-                                   placeholder="E.G., NAME@NMIMS.EDU" 
+                                   placeholder="E.G., NAME@NMIMS.IN" 
                                    x-model="formData.email">
+                            <p class="tech-orbitron text-[9px] text-slate-500 font-semibold tracking-[1.5px] mt-1.5 uppercase">
+                                Only official @nmims.in email IDs are eligible
+                            </p>
                         </div>
 
                         <!-- 3. Academic Year -->
@@ -420,8 +427,8 @@
                             <label class="tech-orbitron text-[10px] text-red-600 font-bold tracking-[3px] uppercase block mb-2">
                                 Academic Year <span class="text-black">*</span>
                             </label>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                                <template x-for="yr in ['1st Year', '2nd Year', '3rd Year', '4th Year']" :key="yr">
+                            <div class="grid grid-cols-2 gap-3">
+                                <template x-for="yr in ['2nd Year', '3rd Year']" :key="yr">
                                     <button type="button" 
                                             @click="formData.year = yr" 
                                             class="btn-selection" 
